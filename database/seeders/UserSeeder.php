@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $adminRole->display_name = "Administrator";
         $adminRole->save();
         
-  
+        
         $memberRole = new Role();
         $memberRole->name = "member";
         $memberRole->display_name = "Member";

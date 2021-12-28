@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PengarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,25 +23,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //route admin
-Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],
+Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin|member']],
     function ( ) {
         Route::get('/', function () {
-            return 'halaman admin';
-        });
-
-        Route::get('/profile', function () {
-            return 'halaman profile admin';
-        });
+            return view ('pengarang.index');
+        })->middleware(['role:admin|member']);
     });
 
-//route member
-Route::group(['prefix'=>'member','middleware'=>['auth','role:member|admin']],
-    function ( ) {
-        Route::get('/', function () {
-            return 'halaman member';
-        });
-
-        Route::get('/profile', function () {
-            return 'halaman profile member';
-        });
-    });
+    Route::resource('pengarang', PengarangController::class);
